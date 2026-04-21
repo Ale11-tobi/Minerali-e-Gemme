@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minerali e Para-gemme | Atlante Interattivo</title>
+  <meta name="description" content="Sito interattivo sui principali minerali e para-gemme con schede fisico-chimiche, confronto, filtri e galleria visiva.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="logo" href="#top">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span>Atlante Mineralogico</span>
+      </a>
+      <nav aria-label="Navigazione principale">
+        <a href="#introduzione">Introduzione</a>
+        <a href="#catalogo">Minerali</a>
+        <a href="#metallici">Metallici</a>
+        <a href="#confronto">Confronto</a>
+        <a href="#interattiva">Interattiva</a>
+        <a href="#galleria">Galleria</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-reveal">
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">Esplorazione scientifica</p>
+          <h1>Minerali e Para-gemme</h1>
+          <p class="hero-subtitle">
+            Un percorso visivo tra struttura cristallina, composizione chimica e bellezza naturale:
+            dai silicati classici alle para-gemme piu affascinanti.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#catalogo">Inizia l'esplorazione</a>
+            <a class="button button-ghost" href="#confronto">Vai al confronto</a>
+          </div>
+          <ul class="hero-stats">
+            <li><strong id="stat-samples">0</strong><span>campioni nel catalogo</span></li>
+            <li><strong id="stat-properties">0</strong><span>proprieta analizzate per scheda</span></li>
+            <li><strong id="stat-classes">0</strong><span>classi mineralogiche rappresentate</span></li>
+          </ul>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="canvas-wrap">
+            <canvas id="crystal-canvas"></canvas>
+          </div>
+          <div class="floating-label label-a">Geologia</div>
+          <div class="floating-label label-b">Cristallografia</div>
+          <div class="floating-label label-c">Mineralogia</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-intro section-reveal" id="introduzione">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Introduzione</p>
+          <h2>Cosa sono minerali, gemme e para-gemme?</h2>
+        </div>
+        <article class="panel intro-theory">
+          <h3>Quadro teorico essenziale</h3>
+          <p>
+            In mineralogia, un minerale e definito come un solido naturale, generalmente inorganico,
+            con struttura interna ordinata e composizione chimica specifica entro limiti di sostituzione.
+            L'analisi di durezza, densita, lucentezza, sfaldatura e frattura permette di collegare
+            l'osservazione macroscopica ai processi geologici di formazione del campione.
+          </p>
+        </article>
+        <div class="intro-grid">
+          <article class="panel">
+            <h3>Minerali</h3>
+            <p>
+              I minerali sono sostanze naturali, inorganiche, con composizione chimica definita (entro limiti)
+              e struttura cristallina ordinata. Le loro proprieta fisiche dipendono direttamente dal reticolo atomico.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Gemme</h3>
+            <p>
+              Una gemma e un materiale (spesso minerale) selezionato per bellezza, rarita, durezza e lavorabilita.
+              Dopo taglio e lucidatura viene usata in gioielleria, collezionismo e oggettistica di pregio.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Para-gemme</h3>
+            <p>
+              Le para-gemme includono materiali ornamentali non sempre classificabili come singoli minerali cristallini
+              (per esempio vetri naturali o aggregati rocciosi), ma di notevole interesse didattico e estetico.
+            </p>
+          </article>
+        </div>
+        <div class="intro-note">
+          <strong>Nota scientifica:</strong> alcuni campioni del sito (come opale e ossidiana) sono mineraloidi:
+          non possiedono una struttura cristallina ordinata su lunga distanza.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-catalogo section-reveal" id="catalogo">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Sezione principale</p>
+          <h2>Schede fisico-chimiche complete</h2>
+        </div>
+
+        <div class="controls" aria-label="Filtri dei minerali">
+          <label class="field">
+            <span>Cerca per nome</span>
+            <input id="search-input" type="search" placeholder="Es. ametista, diamante, opale...">
+          </label>
+          <label class="field">
+            <span>Filtro colore</span>
+            <select id="color-filter">
+              <option value="all">Tutti i colori</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Durezza minima (Mohs): <strong id="hardness-output">0</strong></span>
+            <input id="hardness-filter" type="range" min="0" max="10" step="0.5" value="0">
+          </label>
+          <button class="button button-ghost" id="reset-filters" type="button">Reset filtri</button>
+        </div>
+
+        <div id="cards-grid" class="cards-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section-catalogo section-metallic section-reveal" id="metallici">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Sezione aggiuntiva</p>
+          <h2>Elementi nativi e minerali metallici</h2>
+        </div>
+        <div id="metal-cards-grid" class="cards-grid"></div>
+        <div class="intro-note">
+          <strong>Distinzione didattica:</strong> oro e argento sono elementi nativi metallici.
+          Sono presentati in una sezione dedicata per non confonderli con para-gemme e mineraloidi silicei.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-table section-reveal" id="confronto">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Tabella comparativa</p>
+          <h2>Confronto rapido tra minerali e para-gemme</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Campione</th>
+                <th>Formula</th>
+                <th>Durezza</th>
+                <th>Densita (g/cm³)</th>
+                <th>Sistema</th>
+                <th>Colore tipico</th>
+              </tr>
+            </thead>
+            <tbody id="comparison-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-interattiva section-reveal" id="interattiva">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Sezione interattiva</p>
+          <h2>Indovina il minerale</h2>
+        </div>
+        <div class="quiz-layout">
+          <article class="quiz-panel">
+            <p id="quiz-question">Caricamento quiz...</p>
+            <div id="quiz-options" class="quiz-options"></div>
+            <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+            <div class="quiz-meta">
+              <span id="quiz-progress">Domanda 0/0</span>
+              <span id="quiz-score">Punteggio: 0</span>
+            </div>
+            <button class="button button-primary" id="quiz-next" type="button">Prossima domanda</button>
+          </article>
+          <aside class="panel explain-panel">
+            <h3>Come riconoscere un campione</h3>
+            <ul>
+              <li>Valuta la combinazione fra <strong>durezza</strong> e <strong>sfaldatura</strong>.</li>
+              <li>Confronta <strong>lucentezza</strong> e <strong>striscio</strong> su superficie non smaltata.</li>
+              <li>Osserva il <strong>sistema cristallino</strong> quando presente.</li>
+              <li>Verifica l'origine geologica: magmatica, idrotermale, sedimentaria o metamorfica.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-gallery section-reveal" id="galleria">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Galleria visiva</p>
+          <h2>Texture, colori e strutture naturali</h2>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section-curiosita section-reveal" id="curiosita">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Curiosita e approfondimenti</p>
+          <h2>Scienza, storia e cultura dei minerali</h2>
+        </div>
+        <div class="curiosita-grid">
+          <article class="panel">
+            <h3>Il quarzo come riferimento industriale</h3>
+            <p>
+              La stabilita piezoelettrica del quarzo ha reso possibili oscillatori ad alta precisione:
+              dagli orologi alle strumentazioni elettroniche.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Colori da elementi in traccia</h3>
+            <p>
+              Tracce minime di ferro, rame, titanio o cromo possono modificare drasticamente l'assorbimento ottico
+              e quindi il colore percepito di un cristallo.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Materiali ornamentali e para-gemme</h3>
+            <p>
+              Opale e ossidiana dimostrano che anche materiali non perfettamente cristallini
+              possono avere grande valore estetico, didattico e storico.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <div>
+        <p class="footer-title">Progetto scolastico: Minerali e Para-gemme</p>
+        <p class="footer-sub">
+          Elaborazione digitale con focus su mineralogia, proprieta fisico-chimiche e confronto interattivo.
+        </p>
+      </div>
+      <p class="footer-credits">Immagini mineralogiche da fonti enciclopediche (Wikimedia Commons).</p>
+    </div>
+  </footer>
+
+  <dialog id="detail-modal" class="detail-modal">
+    <button class="modal-close" id="modal-close" type="button" aria-label="Chiudi scheda">&times;</button>
+    <div class="modal-content" id="modal-content"></div>
+  </dialog>
+
+  <dialog id="lightbox" class="lightbox">
+    <button class="modal-close" id="lightbox-close" type="button" aria-label="Chiudi immagine">&times;</button>
+    <figure class="lightbox-figure">
+      <img id="lightbox-image" alt="">
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
